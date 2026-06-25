@@ -1,98 +1,5 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags-shell.sh\" pre:observe skills/continuous-learning-v2/hooks/observe.sh standard,strict"
-          }
-        ],
-        "description": "在每次工具调用前运行观测钩子，记录会话学习信号"
-      },
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" pre:config-protection scripts/hooks/config-protection.js standard,strict",
-            "timeout": 5
-          }
-        ],
-        "description": "在修改配置类文件前执行保护检查，避免误改关键配置"
-      }
-    ],
-    "PreCompact": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" pre:compact scripts/hooks/pre-compact.js standard,strict"
-          }
-        ],
-        "description": "在会话压缩前运行预处理钩子，保留关键上下文"
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-start-bootstrap.js\""
-          }
-        ],
-        "description": "在新会话启动时加载之前上下文并检测包管理器",
-        "id": "session:start"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags-shell.sh\" post:observe skills/continuous-learning-v2/hooks/observe.sh standard,strict"
-          }
-        ],
-        "description": "在每次工具调用后运行观测钩子，补充会话学习信号"
-      },
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" post:quality-gate scripts/hooks/quality-gate.js standard,strict",
-            "timeout": 30,
-            "async": true
-          }
-        ],
-        "description": "在编辑后异步执行质量门检查"
-      },
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" post:edit:accumulate scripts/hooks/post-edit-accumulator.js standard,strict"
-          }
-        ],
-        "description": "在编辑后累积本轮修改记录，供后续批处理使用"
-      },
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" post:edit:design-quality-check scripts/hooks/design-quality-check.js standard,strict",
-            "timeout": 10
-          }
-        ],
-        "description": "在编辑后执行设计质量检查"
-      }
-    ],
     "Stop": [
       {
         "matcher": "*",
@@ -111,19 +18,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" stop:session-end scripts/hooks/session-end.js minimal,standard,strict",
-            "timeout": 10,
-            "async": true
-          }
-        ],
-        "description": "在每次响应结束后持久化会话状态，供后续恢复使用",
-        "id": "stop:session-end"
-      },
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/desktop-notify.js\"",
             "timeout": 30,
             "async": true
@@ -131,21 +25,6 @@
         ],
         "description": "在每次响应后发送桌面通知",
         "id": "stop:desktop-notify"
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/hooks/run-with-flags.js\" session:end:marker scripts/hooks/session-end-marker.js minimal,standard,strict",
-            "timeout": 10,
-            "async": true
-          }
-        ],
-        "description": "在会话结束时写入生命周期标记，不阻塞退出流程",
-        "id": "session:end:marker"
       }
     ]
   }

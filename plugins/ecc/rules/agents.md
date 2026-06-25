@@ -7,32 +7,10 @@
 1. 中型复杂功能或重构 → 使用 **planner**；大型或高风险任务必须使用。
 2. 中型行为变更 → 使用 **code-reviewer**；大型或高风险任务必须使用。
 3. 新功能、bug 修复或复杂逻辑 → 使用 **tdd-guide**。
-4. 架构决策 → 使用 **architect**。
-5. 构建、类型或测试失败 → 使用 **build-error-resolver**。
-6. TypeScript/JavaScript 代码 → 使用 **typescript-reviewer**。
-7. E2E 测试或浏览器验证 → 使用 **e2e-runner**。
-8. 死代码清理 → 使用 **refactor-cleaner**。
-9. 代码复杂度降低 → 使用 **code-simplifier**。
-10. 独立任务 → 并行启动多个 agent。
-
-## 可用代理
-
-位于 `plugins/ecc/agents/`：
-
-| 代理 | 用途 | 何时使用 |
-|-------|---------|------------|
-| planner | 实现规划 | 复杂功能、重构 |
-| architect | 系统设计 | 架构决策 |
-| tdd-guide | 测试驱动开发 | 新功能、bug 修复 |
-| code-reviewer | 代码审查 | 编写代码后 |
-| security-reviewer | 安全分析 | 提交前 |
-| build-error-resolver | 修复构建错误 | 构建失败时 |
-| typescript-reviewer | TypeScript/JavaScript 审查 | TS/JS 代码变更 |
-| e2e-runner | E2E 测试 | 关键用户流程 |
-| refactor-cleaner | 死代码清理 | 代码维护 |
-| code-simplifier | 降低代码复杂度 | 简化复杂实现 |
-| code-explorer | 代码探索 | 定位文件、符号、引用 |
-| code-architect | 代码架构审查 | 设计层面代码结构问题 |
+4. TypeScript/JavaScript 代码 → 使用 **typescript-reviewer**。
+5. 死代码清理 → 使用 **refactor-cleaner**。
+6. 代码复杂度降低 → 使用 **code-simplifier**。
+7. 独立任务 → 并行启动多个 agent。
 
 ## 并行任务执行
 
