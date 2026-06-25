@@ -1,0 +1,14 @@
+{
+  "name": "ztc-workflows",
+  "owner": {
+    "name": "zhaotiancai"
+  },
+  "description": "本地自定义插件市场，用于维护个人定制化插件",
+  "plugins": [
+    {
+      "name": "ecc",
+      "source": "./plugins/ecc",
+      "description": "自定义的ecc配置"
+    }
+  ]
+}
